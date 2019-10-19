@@ -1,5 +1,6 @@
 package com.mandat.amoulanfe.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
@@ -22,12 +23,14 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @ApiOperation(value = "Permettre à un utilisateur de s'identifier")
     @PostMapping("/signin")
     @ResponseStatus(OK)
     public JwtAuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
     }
 
+    @ApiOperation(value = "Création d'un compte")
     @PostMapping("/signup")
     @ResponseStatus(OK)
     public Long register(@Valid @RequestBody SignUpRequest signUpRequest) {

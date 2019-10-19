@@ -1,5 +1,6 @@
 package com.mandat.amoulanfe.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +25,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ApiOperation(value = "Récuperer l'utilisateur courant")
     @GetMapping("me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return userService.getCurrentUser(currentUser);
     }
 
+    @ApiOperation(value = "Retourne tous les utilisateurs")
     @GetMapping("all")
     public List<User> findAll() {
         return userService.findAll();
