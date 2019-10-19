@@ -14,7 +14,7 @@ import com.mandat.amoulanfe.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/api/v1/amoulanfe")
 public class UserController {
 
     private UserService userService;

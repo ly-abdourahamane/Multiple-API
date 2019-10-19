@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/amoulanfe")
 public class AuthController {
 
     private AuthService authService;
