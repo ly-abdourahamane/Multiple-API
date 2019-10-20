@@ -1,8 +1,12 @@
 package com.mandat.amoulanfe.service;
 
+import com.mandat.amoulanfe.domain.VerificationToken;
+import com.mandat.amoulanfe.dto.UserSummary;
 import com.mandat.amoulanfe.exception.ConflictException;
 import com.mandat.amoulanfe.repository.RoleRepository;
 import com.mandat.amoulanfe.repository.UserRepository;
+import com.mandat.amoulanfe.repository.VerificationTokenRepository;
+import com.mandat.amoulanfe.security.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +25,9 @@ import com.mandat.amoulanfe.domain.User;
 import com.mandat.amoulanfe.security.JwtTokenProvider;
 import com.mandat.amoulanfe.security.UserPrincipal;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -32,6 +38,15 @@ public class AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider tokenProvider;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
@@ -61,7 +76,7 @@ public class AuthService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public Long registerUser(SignUpRequest signUpRequest) {
+    public User registerUser(SignUpRequest signUpRequest) {
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictException("Email [email: " + signUpRequest.getEmail() + "] is already taken");
@@ -78,6 +93,14 @@ public class AuthService {
 
         log.info("Successfully registered user with [email: {}]", user.getEmail());
 
-        return userRepository.save(user).getId();
+        return userRepository.save(user);
         }
+
+    public void sendConfirmationEmail(String url, User user){
+        String token = UUID.randomUUID().toString();
+        LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
+        VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,user);
+        VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
+        mailService.sendVerificationEmail(url,savedToken.getToken(),user.getEmail());
+    }
 }
