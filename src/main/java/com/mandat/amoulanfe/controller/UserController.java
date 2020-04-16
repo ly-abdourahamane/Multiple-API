@@ -35,7 +35,7 @@ public class UserController {
     @ApiOperation(value = "Retourne tous les utilisateurs")
     @GetMapping("all")
     public List<User> findAll() {
-        return userService.findAll();
+        return userService.findAllUsers();
     }
 
 }

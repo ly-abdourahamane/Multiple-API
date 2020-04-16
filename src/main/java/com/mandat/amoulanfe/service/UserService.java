@@ -15,6 +15,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public UserSummary getCurrentUser(UserPrincipal userPrincipal) {
         return UserSummary.builder()
                 .id(userPrincipal.getId())
@@ -23,7 +27,7 @@ public class UserService {
                 .build();
     }
 
-    public List<User> findAll() {
+    public List<User> findAllUsers() {
         return this.userRepository.findAll();
     }
 }
