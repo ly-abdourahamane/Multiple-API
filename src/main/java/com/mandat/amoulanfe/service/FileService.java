@@ -32,8 +32,8 @@ public class FileService {
     public FileService(FileRepository fileRepository, FileStorageProperties fileStorageProperties) {
         this.fileRepository = fileRepository;
 
-        this.fileStorageLocation =  Paths.get("dir"); /*Paths.get(fileStorageProperties.getUploadDir())
-                .toAbsolutePath().normalize(); */
+        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+                .toAbsolutePath().normalize();
 
         try {
             Files.createDirectories(this.fileStorageLocation);
