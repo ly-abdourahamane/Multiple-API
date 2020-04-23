@@ -1,12 +1,12 @@
 package com.mandat.amoulanfe.controller;
 
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
 import com.mandat.amoulanfe.dto.LoginRequest;
 import com.mandat.amoulanfe.dto.SignUpRequest;
 import com.mandat.amoulanfe.service.AuthService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 

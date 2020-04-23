@@ -1,6 +1,5 @@
 package com.mandat.amoulanfe.service;
 
-import com.mandat.amoulanfe.domain.FileDomain;
 import com.mandat.amoulanfe.domain.FileStorageProperties;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;

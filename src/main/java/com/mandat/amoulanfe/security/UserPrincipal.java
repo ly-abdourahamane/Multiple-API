@@ -1,10 +1,10 @@
 package com.mandat.amoulanfe.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mandat.amoulanfe.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.mandat.amoulanfe.domain.User;
 
 import java.util.Collection;
 import java.util.List;

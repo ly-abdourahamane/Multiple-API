@@ -1,8 +1,17 @@
 package com.mandat.amoulanfe.service;
 
+import com.mandat.amoulanfe.domain.Role;
+import com.mandat.amoulanfe.domain.RoleName;
+import com.mandat.amoulanfe.domain.User;
+import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
+import com.mandat.amoulanfe.dto.LoginRequest;
+import com.mandat.amoulanfe.dto.SignUpRequest;
+import com.mandat.amoulanfe.exception.AppException;
 import com.mandat.amoulanfe.exception.ConflictException;
 import com.mandat.amoulanfe.repository.RoleRepository;
 import com.mandat.amoulanfe.repository.UserRepository;
+import com.mandat.amoulanfe.security.JwtTokenProvider;
+import com.mandat.amoulanfe.security.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,15 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.mandat.amoulanfe.domain.RoleName;
-import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
-import com.mandat.amoulanfe.dto.LoginRequest;
-import com.mandat.amoulanfe.dto.SignUpRequest;
-import com.mandat.amoulanfe.exception.AppException;
-import com.mandat.amoulanfe.domain.Role;
-import com.mandat.amoulanfe.domain.User;
-import com.mandat.amoulanfe.security.JwtTokenProvider;
-import com.mandat.amoulanfe.security.UserPrincipal;
 
 import java.util.Collections;
 
