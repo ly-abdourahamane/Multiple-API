@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -83,5 +84,10 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @GetMapping(value = "/zip-download", produces="application/zip")
+    public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
+        fileService.zipDownload(fileNameList, response);
     }
 }

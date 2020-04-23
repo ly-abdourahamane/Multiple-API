@@ -7,19 +7,26 @@ import com.mandat.amoulanfe.exception.FileStoreException;
 import com.mandat.amoulanfe.repository.FileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Slf4j
 @Service
@@ -72,5 +79,25 @@ public class FileService {
         } catch (MalformedURLException ex) {
             throw new FileNotFoundException("Fichier non truvé " + fileName, ex);
         }
+    }
+
+    public void zipDownload(List<String> fileNameList, HttpServletResponse response) throws IOException {
+        ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
+        String fileBasePath = "UPLOAD-FILES/";
+        String zipFileName = "filesZip";
+
+        for (String fileName : fileNameList) {
+            FileSystemResource resource = new FileSystemResource(fileBasePath + fileName);
+            ZipEntry zipEntry = new ZipEntry(Objects.requireNonNull(resource.getFilename()));
+            zipEntry.setSize(resource.contentLength());
+            zipOut.putNextEntry(zipEntry);
+            StreamUtils.copy(resource.getInputStream(), zipOut);
+            zipOut.closeEntry();
+        }
+
+        zipOut.finish();
+        zipOut.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + zipFileName + "\"");
     }
 }
