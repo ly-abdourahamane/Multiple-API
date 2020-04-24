@@ -8,6 +8,7 @@ import com.mandat.amoulanfe.dto.SignUpRequest;
 import com.mandat.amoulanfe.service.AuthService;
 import lombok.Setter;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -30,7 +31,7 @@ public class AuthController {
     @ApiOperation(value = "Création d'un compte")
     @PostMapping("/signup")
     @ResponseStatus(OK)
-    public Long register(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public Long register(@Valid @RequestBody SignUpRequest signUpRequest) throws MessagingException {
         return authService.registerUser(signUpRequest);
     }
 }

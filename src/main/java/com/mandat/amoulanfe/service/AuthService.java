@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
@@ -77,7 +78,7 @@ public class AuthService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public Long registerUser(SignUpRequest signUpRequest) {
+    public Long registerUser(SignUpRequest signUpRequest) throws MessagingException {
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictException("Email [email: " + signUpRequest.getEmail() + "] is already taken");
@@ -99,7 +100,7 @@ public class AuthService {
         return userID;
     }
 
-    public void sendConfirmationEmail(String url, User user){
+    public void sendConfirmationEmail(String url, User user) throws MessagingException {
         String token = UUID.randomUUID().toString();
         LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
         VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,user);
