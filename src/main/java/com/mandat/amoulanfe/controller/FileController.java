@@ -3,6 +3,7 @@ package com.mandat.amoulanfe.controller;
 import com.mandat.amoulanfe.domain.UploadFileResponse;
 import com.mandat.amoulanfe.service.FileService;
 import io.swagger.annotations.ApiOperation;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,16 +22,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Setter
 @RestController
-@RequestMapping("/api/v1/amoulanfe/files/")
+@RequestMapping("/api/v1/utilsAPI/files/")
 public class FileController {
 
     @Autowired
     private FileService fileService;
-
-    public FileController(FileService fileService) {
-        this.fileService = fileService;
-    }
 
     @ApiOperation(value = "Chargement d'un fichier")
     @PostMapping("/upload/one")

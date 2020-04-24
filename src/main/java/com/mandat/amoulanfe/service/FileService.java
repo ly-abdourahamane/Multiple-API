@@ -4,6 +4,7 @@ import com.mandat.amoulanfe.domain.FileStorageProperties;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
 import com.mandat.amoulanfe.repository.FileRepository;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+@Setter
 @Slf4j
 @Service
 public class FileService {

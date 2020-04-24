@@ -12,6 +12,7 @@ import com.mandat.amoulanfe.repository.RoleRepository;
 import com.mandat.amoulanfe.repository.UserRepository;
 import com.mandat.amoulanfe.security.JwtTokenProvider;
 import com.mandat.amoulanfe.security.UserPrincipal;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
+@Setter
 @Slf4j
 public class AuthService {
 
