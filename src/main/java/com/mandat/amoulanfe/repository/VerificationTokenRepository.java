@@ -1,6 +1,7 @@
 package com.mandat.amoulanfe.repository;
 
 import com.mandat.amoulanfe.domain.VerificationToken;
+import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+@Setter
 @Repository
 @Transactional
 public class VerificationTokenRepository {

@@ -33,6 +33,7 @@ import java.util.UUID;
 @Slf4j
 public class AuthService {
 
+    private static final String URL = "http://localhost:8000/api/v1/utilsAPI/user/signin";
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -91,9 +92,11 @@ public class AuthService {
 
         user.setRoles(Collections.singleton(userRole));
 
+        Long userID =  userRepository.save(user).getId();
+        sendConfirmationEmail(URL, user);
         log.info("Successfully registered user with [email: {}]", user.getEmail());
 
-        return userRepository.save(user).getId();
+        return userID;
     }
 
     public void sendConfirmationEmail(String url, User user){
