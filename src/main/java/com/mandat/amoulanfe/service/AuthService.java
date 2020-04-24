@@ -1,12 +1,20 @@
 package com.mandat.amoulanfe.service;
 
+import com.mandat.amoulanfe.domain.Role;
+import com.mandat.amoulanfe.domain.RoleName;
+import com.mandat.amoulanfe.domain.User;
+import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
+import com.mandat.amoulanfe.dto.LoginRequest;
+import com.mandat.amoulanfe.dto.SignUpRequest;
+import com.mandat.amoulanfe.exception.AppException;
 import com.mandat.amoulanfe.domain.VerificationToken;
-import com.mandat.amoulanfe.dto.UserSummary;
 import com.mandat.amoulanfe.exception.ConflictException;
 import com.mandat.amoulanfe.repository.RoleRepository;
 import com.mandat.amoulanfe.repository.UserRepository;
+import com.mandat.amoulanfe.security.JwtTokenProvider;
+import com.mandat.amoulanfe.security.UserPrincipal;
+import lombok.Setter;
 import com.mandat.amoulanfe.repository.VerificationTokenRepository;
-import com.mandat.amoulanfe.security.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,21 +23,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.mandat.amoulanfe.domain.RoleName;
-import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
-import com.mandat.amoulanfe.dto.LoginRequest;
-import com.mandat.amoulanfe.dto.SignUpRequest;
-import com.mandat.amoulanfe.exception.AppException;
-import com.mandat.amoulanfe.domain.Role;
-import com.mandat.amoulanfe.domain.User;
-import com.mandat.amoulanfe.security.JwtTokenProvider;
-import com.mandat.amoulanfe.security.UserPrincipal;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
 
 @Service
+@Setter
 @Slf4j
 public class AuthService {
 
@@ -76,7 +76,7 @@ public class AuthService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public User registerUser(SignUpRequest signUpRequest) {
+    public Long registerUser(SignUpRequest signUpRequest) {
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictException("Email [email: " + signUpRequest.getEmail() + "] is already taken");
@@ -93,8 +93,8 @@ public class AuthService {
 
         log.info("Successfully registered user with [email: {}]", user.getEmail());
 
-        return userRepository.save(user);
-        }
+        return userRepository.save(user).getId();
+    }
 
     public void sendConfirmationEmail(String url, User user){
         String token = UUID.randomUUID().toString();
