@@ -1,5 +1,6 @@
 package com.mandat.amoulanfe.service;
 
+import com.mandat.amoulanfe.domain.FileDomain;
 import com.mandat.amoulanfe.domain.FileStorageProperties;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
@@ -52,6 +53,7 @@ public class FileService {
 
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        FileDomain fileDomain = new FileDomain();
 
         try {
             if(fileName.contains("..")) {
@@ -60,6 +62,11 @@ public class FileService {
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            fileDomain.setName(fileName);
+            fileDomain.setType(file.getContentType());
+            fileDomain.setBuffer(file.getBytes());
+            this.fileRepository.save(fileDomain);
 
             log.info("Le fichier " + fileName + " à été bien chargé");
             return fileName;
@@ -80,6 +87,15 @@ public class FileService {
         } catch (MalformedURLException ex) {
             throw new FileNotFoundException("Fichier non truvé " + fileName, ex);
         }
+    }
+
+    public FileDomain getFileByID(Long fileId) {
+        return fileRepository.findById(fileId)
+                .orElseThrow(() -> new FileNotFoundException("Fichier non trouvé avec l'id  " + fileId));
+    }
+
+    public FileDomain findFileByName(String name) {
+        return fileRepository.findByName(name);
     }
 
     public void zipDownload(List<String> fileNameList, HttpServletResponse response) throws IOException {

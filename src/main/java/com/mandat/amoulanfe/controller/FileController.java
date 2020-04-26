@@ -1,11 +1,13 @@
 package com.mandat.amoulanfe.controller;
 
+import com.mandat.amoulanfe.domain.FileDomain;
 import com.mandat.amoulanfe.domain.UploadFileResponse;
 import com.mandat.amoulanfe.service.FileService;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -78,9 +80,32 @@ public class FileController {
                 .body(resource);
     }
 
+    @ApiOperation(value = "Téléchargement des fichiers dont les noms sont donnés en paramètres dans un zip")
     @GetMapping(value = "/zip-download", produces="application/zip")
     @PreAuthorize("hasRole('USER')")
     public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
         fileService.zipDownload(fileNameList, response);
+    }
+
+    @ApiOperation(value = "Téléchargement d'un fichier à partir de son id")
+    @GetMapping("/download/v2/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) {
+        FileDomain fileDomain = fileService.getFileByID(fileId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(fileDomain.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDomain.getName() + "\"")
+                .body(new ByteArrayResource(fileDomain.getBuffer()));
+    }
+
+    @ApiOperation(value = "Téléchargement d'un fichier à partir de son nom")
+    @GetMapping("/download/v3/{fileName}")
+    public ResponseEntity<Resource> downloadFileByName(@PathVariable String fileName) {
+        FileDomain fileDomain = fileService.findFileByName(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(fileDomain.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDomain.getName() + "\"")
+                .body(new ByteArrayResource(fileDomain.getBuffer()));
     }
 }
