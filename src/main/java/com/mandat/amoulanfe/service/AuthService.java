@@ -81,7 +81,7 @@ public class AuthService {
     public Long registerUser(SignUpRequest signUpRequest) throws MessagingException {
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new ConflictException("Email [email: " + signUpRequest.getEmail() + "] is already taken");
+            throw new ConflictException("[Email: " + signUpRequest.getEmail() + "] Existe déjà");
         }
 
         User user = new User(signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword());

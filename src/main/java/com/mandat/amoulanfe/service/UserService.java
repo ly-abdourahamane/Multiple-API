@@ -22,6 +22,7 @@ public class UserService {
                 .id(userPrincipal.getId())
                 .email(userPrincipal.getEmail())
                 .name(userPrincipal.getName())
+                .authorities(userPrincipal.getAuthorities())
                 .build();
     }
 

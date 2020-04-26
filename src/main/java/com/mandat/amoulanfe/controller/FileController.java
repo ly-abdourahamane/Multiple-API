@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,11 +33,12 @@ public class FileController {
 
     @ApiOperation(value = "Chargement d'un fichier")
     @PostMapping("/upload/one")
+    @PreAuthorize("hasRole('USER')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/v1/amoulanfe/files/download/")
+                .path("/api/v1/utilsAPI/files/download/")
                 .path(fileName)
                 .toUriString();
 
@@ -45,6 +47,7 @@ public class FileController {
 
     @ApiOperation(value = "Chargement de plusieurs fichiers")
     @PostMapping("/upload/multiple")
+    @PreAuthorize("hasRole('USER')")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
                 .map(this::uploadFile)
@@ -53,6 +56,7 @@ public class FileController {
 
     @ApiOperation(value = "Téléchargement d'un fichier")
     @GetMapping("/download/{fileName:.+}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileService.loadFile(fileName);
 
@@ -75,6 +79,7 @@ public class FileController {
     }
 
     @GetMapping(value = "/zip-download", produces="application/zip")
+    @PreAuthorize("hasRole('USER')")
     public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
         fileService.zipDownload(fileNameList, response);
     }

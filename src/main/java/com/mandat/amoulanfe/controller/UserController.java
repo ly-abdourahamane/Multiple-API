@@ -36,6 +36,7 @@ public class UserController {
 
     @ApiOperation(value = "Retourne tous les utilisateurs")
     @GetMapping("all")
+    @PreAuthorize("hasRole('USER')")
     public List<User> findAll() {
         return userService.findAllUsers();
     }

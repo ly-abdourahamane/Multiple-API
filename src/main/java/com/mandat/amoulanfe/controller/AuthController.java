@@ -1,6 +1,7 @@
 package com.mandat.amoulanfe.controller;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
 import com.mandat.amoulanfe.dto.LoginRequest;
@@ -23,6 +24,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signin")
+   // @PreAuthorize("hasRole('USER')")
     @ResponseStatus(OK)
     public JwtAuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
