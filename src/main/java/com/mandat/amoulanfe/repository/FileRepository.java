@@ -16,4 +16,6 @@ public interface FileRepository extends JpaRepository<FileDomain, Long> {
 
     @Query(value = "SELECT f FROM FileDomain f WHERE f.name = :name")
     FileDomain findByName(@Param("name") String name);
+
+    Boolean existsByName(String name);
 }

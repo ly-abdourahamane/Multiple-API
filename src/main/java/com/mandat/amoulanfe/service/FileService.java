@@ -63,6 +63,14 @@ public class FileService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
+            FileDomain DBFile = fileRepository.findByName(fileName);
+
+            //Mise à jour du fichier s'il existe
+            if(DBFile != null) {
+                fileDomain.setId(DBFile.getId());
+                log.info("Le fichier " + fileName + " existe déjà, il a été mis à jour");
+            }
+
             fileDomain.setName(fileName);
             fileDomain.setType(file.getContentType());
             fileDomain.setBuffer(file.getBytes());
