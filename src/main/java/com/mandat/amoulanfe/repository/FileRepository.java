@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FileRepository extends JpaRepository<FileDomain, Long> {
@@ -13,7 +14,7 @@ public interface FileRepository extends JpaRepository<FileDomain, Long> {
     @Query(value = "SELECT f FROM FileDomain f")
     List<FileDomain> getAllFiles();
 
-    FileDomain findByName(String name);
+    Optional<FileDomain> findByName(String name);
 
-    Boolean existsByName(String name);
+    Optional<Boolean> existsByName(String name);
 }

@@ -27,7 +27,6 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signin")
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(OK)
     public JwtAuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);

@@ -65,7 +65,8 @@ public class FileService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            FileDomain DBFile = fileRepository.findByName(fileName);
+            FileDomain DBFile = fileRepository.findByName(fileName)
+                    .orElseThrow(() -> new FileNotFoundException("Le fichier [" + fileName + "] est introuvable" ));
 
             //Mise à jour du fichier s'il existe
             if(DBFile != null) {
@@ -105,7 +106,8 @@ public class FileService {
     }
 
     public FileDomain findFileByName(String name) {
-        return fileRepository.findByName(name);
+        return fileRepository.findByName(name)
+                .orElseThrow(() -> new FileNotFoundException("Le fichier [" + name + "] est introuvable" ));
     }
 
     public void zipDownload(List<String> fileNameList, HttpServletResponse response) throws IOException {
