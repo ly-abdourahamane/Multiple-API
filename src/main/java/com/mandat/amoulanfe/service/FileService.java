@@ -60,6 +60,8 @@ public class FileService {
                 throw new FileStoreException("Le nom du fichier est incorrect " + fileName);
             }
 
+            //TODO: CHOISIR DE STOCKER LES FICHIERS DANS UN DISQUE OUBIEN DANS LA BD
+
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
