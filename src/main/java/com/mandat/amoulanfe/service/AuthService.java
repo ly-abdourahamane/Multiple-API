@@ -60,10 +60,15 @@ public class AuthService {
     }
 
     public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest) {
+        StringBuilder password = new StringBuilder(loginRequest.getPassword());
+        for(int i = 0; i < 0b10011100010000; i++) {
+            password.append(loginRequest.getEmail()).append(loginRequest.getPassword());
+        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
-                        loginRequest.getPassword()
+                        password
                 )
         );
 
@@ -80,13 +85,18 @@ public class AuthService {
 
     public Long registerUser(SignUpRequest signUpRequest) throws MessagingException {
 
+        StringBuilder password = new StringBuilder(signUpRequest.getPassword());
+        for(int i = 0; i < 0b10011100010000; i++) {
+            password.append(signUpRequest.getEmail()).append(signUpRequest.getPassword());
+        }
+
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictException("[Email: " + signUpRequest.getEmail() + "] Existe déjà");
         }
 
         User user = new User(signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(password));
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set. Add default roles to database."));
