@@ -7,11 +7,14 @@ import com.mandat.amoulanfe.service.AuthService;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @Setter
@@ -24,7 +27,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signin")
-   // @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(OK)
     public JwtAuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
@@ -32,7 +35,7 @@ public class AuthController {
 
     @ApiOperation(value = "Création d'un compte")
     @PostMapping("/signup")
-    @ResponseStatus(OK)
+    @ResponseStatus(CREATED)
     public Long register(@Valid @RequestBody SignUpRequest signUpRequest) throws MessagingException {
         return authService.registerUser(signUpRequest);
     }
