@@ -16,5 +16,5 @@ public class UserSummary {
     private Long id;
     private String name;
     private String email;
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> roles;
 }
