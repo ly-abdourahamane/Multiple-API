@@ -9,9 +9,14 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -26,6 +31,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @ApiOperation(value = "Connexion à mon compte")
     @PostMapping("/signin")
     @ResponseStatus(OK)
     public JwtAuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -37,5 +43,12 @@ public class AuthController {
     @ResponseStatus(CREATED)
     public Long register(@Valid @RequestBody SignUpRequest signUpRequest) throws MessagingException {
         return authService.registerUser(signUpRequest);
+    }
+
+    @ApiOperation(value = "Connexion à mon compte")
+    @GetMapping("/logout")
+    @ResponseStatus(OK)
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        authService.logout(request, response);
     }
 }

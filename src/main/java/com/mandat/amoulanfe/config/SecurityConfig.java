@@ -5,6 +5,7 @@ import com.mandat.amoulanfe.security.JwtAuthenticationEntryPoint;
 import com.mandat.amoulanfe.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -17,11 +18,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
+@ComponentScan
 @EnableGlobalMethodSecurity(
         prePostEnabled = true
 )
@@ -101,8 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/v1/utils" +
-                        "/**")
+                .antMatchers("/api/v1/utils" + "/**")
                 .permitAll()
 //                .antMatchers("/api/yourEndpoint")
 //                .permitAll()
