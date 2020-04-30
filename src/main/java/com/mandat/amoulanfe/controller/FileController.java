@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Setter
 @RestController
-@RequestMapping("/api/v1/utilsAPI/files/")
+@RequestMapping("/api/v1/utils/files/")
 public class FileController {
 
     @Autowired
