@@ -1,12 +1,15 @@
 package com.mandat.amoulanfe.service;
 
-import com.mandat.amoulanfe.domain.FileUpload;
 import com.mandat.amoulanfe.domain.FileStorageProperties;
+import com.mandat.amoulanfe.domain.FileUpload;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
 import com.mandat.amoulanfe.repository.FileRepository;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -55,6 +58,10 @@ public class FileService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         FileUpload fileUpload = new FileUpload();
 
+        LocalDateTime localDateTime = new LocalDateTime();
+        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("E, MMM dd yyyy HH:mm:ss");
+        String createdDate = dateTimeFormat.print(localDateTime);
+
         try {
             if(fileName.contains("..")) {
                 throw new FileStoreException("Le nom du fichier est incorrect " + fileName);
@@ -77,6 +84,8 @@ public class FileService {
             fileUpload.setName(fileName);
             fileUpload.setType(file.getContentType());
             fileUpload.setBuffer(file.getBytes());
+            fileUpload.setSize(file.getSize());
+            fileUpload.setCreatedDate(createdDate);
             this.fileRepository.save(fileUpload);
 
             if(DBFile == null) {

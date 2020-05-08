@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -30,4 +31,10 @@ public class FileUpload implements Serializable {
 
     @Lob
     private byte[] buffer;
+
+    @NotNull
+    Long size;
+
+    @NotNull
+    String CreatedDate;
 }
