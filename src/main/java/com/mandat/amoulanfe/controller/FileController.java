@@ -111,7 +111,7 @@ public class FileController {
     }
 
     @ApiOperation(value = "Téléchargement d'un fichier à partir de son nom")
-    @GetMapping("/infos")
+    @GetMapping("/all/infos")
     public List<FileUploadDTO> findAllFilesInfos() {
         return this.fileService.findAllFilesInfos();
     }
