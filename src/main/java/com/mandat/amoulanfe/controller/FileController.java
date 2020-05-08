@@ -34,7 +34,7 @@ public class FileController {
     private FileService fileService;
 
     @ApiOperation(value = "Chargement d'un fichier")
-    @PostMapping("/upload/one")
+    @PostMapping(value = "/upload/one",  consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('USER')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
