@@ -1,6 +1,6 @@
 package com.mandat.amoulanfe.service;
 
-import com.mandat.amoulanfe.domain.FileDomain;
+import com.mandat.amoulanfe.domain.FileUpload;
 import com.mandat.amoulanfe.domain.FileStorageProperties;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
@@ -53,7 +53,7 @@ public class FileService {
 
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        FileDomain fileDomain = new FileDomain();
+        FileUpload fileUpload = new FileUpload();
 
         try {
             if(fileName.contains("..")) {
@@ -65,21 +65,24 @@ public class FileService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            FileDomain DBFile = fileRepository.findByName(fileName)
-                    .orElseThrow(() -> new FileNotFoundException("Le fichier [" + fileName + "] est introuvable" ));
+            FileUpload DBFile = fileRepository.findByName(fileName)
+                    .orElse(null);
 
             //Mise à jour du fichier s'il existe
             if(DBFile != null) {
-                fileDomain.setId(DBFile.getId());
+                fileUpload.setId(DBFile.getId());
                 log.info("Le fichier " + fileName + " existe déjà, il a été mis à jour");
             }
 
-            fileDomain.setName(fileName);
-            fileDomain.setType(file.getContentType());
-            fileDomain.setBuffer(file.getBytes());
-            this.fileRepository.save(fileDomain);
+            fileUpload.setName(fileName);
+            fileUpload.setType(file.getContentType());
+            fileUpload.setBuffer(file.getBytes());
+            this.fileRepository.save(fileUpload);
 
-            log.info("Le fichier " + fileName + " à été bien chargé");
+            if(DBFile == null) {
+                log.info("Le fichier " + fileName + " à été bien chargé");
+            }
+
             return fileName;
         } catch (IOException ex) {
             throw new FileStoreException("Could not store file " + fileName + ". Please try again!", ex);
@@ -100,12 +103,12 @@ public class FileService {
         }
     }
 
-    public FileDomain getFileByID(Long fileId) {
+    public FileUpload getFileByID(Long fileId) {
         return fileRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("Fichier non trouvé avec l'id  " + fileId));
     }
 
-    public FileDomain findFileByName(String name) {
+    public FileUpload findFileByName(String name) {
         return fileRepository.findByName(name)
                 .orElseThrow(() -> new FileNotFoundException("Le fichier [" + name + "] est introuvable" ));
     }

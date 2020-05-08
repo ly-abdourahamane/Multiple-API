@@ -1,6 +1,6 @@
 package com.mandat.amoulanfe.controller;
 
-import com.mandat.amoulanfe.domain.FileDomain;
+import com.mandat.amoulanfe.domain.FileUpload;
 import com.mandat.amoulanfe.domain.UploadFileResponse;
 import com.mandat.amoulanfe.service.FileService;
 import io.swagger.annotations.ApiOperation;
@@ -34,9 +34,7 @@ public class FileController {
     private FileService fileService;
 
     @ApiOperation(value = "Chargement d'un fichier")
-    @RequestMapping(value = ("/upload"),
-            method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/upload/one")
     @PreAuthorize("hasRole('USER')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
@@ -92,22 +90,22 @@ public class FileController {
     @ApiOperation(value = "Téléchargement d'un fichier à partir de son id")
     @GetMapping("/download/v2/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) {
-        FileDomain fileDomain = fileService.getFileByID(fileId);
+        FileUpload fileUpload = fileService.getFileByID(fileId);
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fileDomain.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDomain.getName() + "\"")
-                .body(new ByteArrayResource(fileDomain.getBuffer()));
+                .contentType(MediaType.parseMediaType(fileUpload.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUpload.getName() + "\"")
+                .body(new ByteArrayResource(fileUpload.getBuffer()));
     }
 
     @ApiOperation(value = "Téléchargement d'un fichier à partir de son nom")
     @GetMapping("/download/v3/{fileName}")
     public ResponseEntity<Resource> downloadFileByName(@PathVariable String fileName) {
-        FileDomain fileDomain = fileService.findFileByName(fileName);
+        FileUpload fileUpload = fileService.findFileByName(fileName);
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fileDomain.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDomain.getName() + "\"")
-                .body(new ByteArrayResource(fileDomain.getBuffer()));
+                .contentType(MediaType.parseMediaType(fileUpload.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUpload.getName() + "\"")
+                .body(new ByteArrayResource(fileUpload.getBuffer()));
     }
 }

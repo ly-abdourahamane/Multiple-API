@@ -14,8 +14,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class FileDomain implements Serializable {
+@Entity(name = "Files")
+public class FileUpload implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
