@@ -2,6 +2,7 @@ package com.mandat.amoulanfe.controller;
 
 import com.mandat.amoulanfe.domain.FileUpload;
 import com.mandat.amoulanfe.domain.UploadFileResponse;
+import com.mandat.amoulanfe.dto.FileUploadDTO;
 import com.mandat.amoulanfe.service.FileService;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
@@ -107,5 +108,11 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(fileUpload.getType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUpload.getName() + "\"")
                 .body(new ByteArrayResource(fileUpload.getBuffer()));
+    }
+
+    @ApiOperation(value = "Téléchargement d'un fichier à partir de son nom")
+    @GetMapping("/infos")
+    public List<FileUploadDTO> findAllFilesInfos() {
+        return this.fileService.findAllFilesInfos();
     }
 }

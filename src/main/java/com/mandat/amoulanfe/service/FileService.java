@@ -2,6 +2,7 @@ package com.mandat.amoulanfe.service;
 
 import com.mandat.amoulanfe.domain.FileStorageProperties;
 import com.mandat.amoulanfe.domain.FileUpload;
+import com.mandat.amoulanfe.dto.FileUploadDTO;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
 import com.mandat.amoulanfe.repository.FileRepository;
@@ -27,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -120,6 +122,16 @@ public class FileService {
     public FileUpload findFileByName(String name) {
         return fileRepository.findByName(name)
                 .orElseThrow(() -> new FileNotFoundException("Le fichier [" + name + "] est introuvable" ));
+    }
+
+    public List<FileUploadDTO> findAllFilesInfos() {
+        List<FileUpload> fileUploads = this.fileRepository.findAll();
+        List<FileUploadDTO> fileUploadDTOS = new ArrayList<>();
+
+        fileUploads.forEach(elem -> fileUploadDTOS.add(new FileUploadDTO(elem.getId(), elem.getName(),
+                elem.getType(), elem.getSize(), elem.getCreatedDate())));
+
+        return fileUploadDTOS;
     }
 
     public void zipDownload(List<String> fileNameList, HttpServletResponse response) throws IOException {

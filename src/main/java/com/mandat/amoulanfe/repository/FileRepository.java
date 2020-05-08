@@ -14,9 +14,6 @@ public interface FileRepository extends JpaRepository<FileUpload, Long> {
     @Query(value = "SELECT f FROM Files f")
     List<FileUpload> getAllFiles();
 
-    @Query(value = "SELECT id, name, type FROM Files")
-    List<FileUpload> findFilesInfos();
-
     Optional<FileUpload> findByName(String name);
 
     Optional<Boolean> existsByName(String name);
