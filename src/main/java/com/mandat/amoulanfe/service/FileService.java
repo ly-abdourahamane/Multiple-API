@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -61,8 +62,8 @@ public class FileService {
         FileUpload fileUpload = new FileUpload();
 
         LocalDateTime localDateTime = new LocalDateTime();
-        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("E, MMM dd yyyy HH:mm:ss");
-        String createdDate = dateTimeFormat.print(localDateTime);
+        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+        String createdDate = dateTimeFormat.withLocale(Locale.FRANCE).print(localDateTime);
 
         try {
             if(fileName.contains("..")) {
@@ -152,5 +153,9 @@ public class FileService {
         zipOut.close();
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + zipFileName + "\"");
+    }
+
+    public void deleteFileByID(Long id) {
+        this.fileRepository.deleteById(id);
     }
 }

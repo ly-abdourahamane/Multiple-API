@@ -35,7 +35,7 @@ public class FileController {
     private FileService fileService;
 
     @ApiOperation(value = "Chargement d'un fichier")
-    @PostMapping(value = "/upload/one",  consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/upload/one")
     @PreAuthorize("hasRole('USER')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
@@ -82,7 +82,7 @@ public class FileController {
     }
 
     @ApiOperation(value = "Téléchargement des fichiers dont les noms sont donnés en paramètres dans un zip")
-    @GetMapping(value = "/zip-download", produces="application/zip")
+    @GetMapping(value = "zip-download" , produces="application/zip")
     @PreAuthorize("hasRole('USER')")
     public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
         fileService.zipDownload(fileNameList, response);
@@ -114,5 +114,11 @@ public class FileController {
     @GetMapping("/all/infos")
     public List<FileUploadDTO> findAllFilesInfos() {
         return this.fileService.findAllFilesInfos();
+    }
+
+    @ApiOperation(value = "Suppression d'un fichier à partir de son id")
+    @GetMapping("/delete/{fileID}")
+    public void delete(@PathVariable Long fileID) {
+        this.fileService.deleteFileByID(fileID);
     }
 }
