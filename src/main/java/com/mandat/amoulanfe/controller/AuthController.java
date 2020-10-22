@@ -19,10 +19,10 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Setter
 @RestController
-@RequestMapping("/api/v1/utils/auth")
+@RequestMapping("/api/v1/")
 public class AuthController {
 
-    private static final String URL = "http://localhost:8000/api/v1/auth/signin";
+    private static final String URL = "http://localhost:8000/api/v1/signin";
     @Autowired
     private AuthService authService;
 

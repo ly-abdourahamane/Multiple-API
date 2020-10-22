@@ -107,7 +107,7 @@ public class AuthService {
         user.setRoles(Collections.singleton(userRole));
 
         Long userID =  userRepository.save(user).getId();
-        sendConfirmationEmail(URL, user);
+   //     sendConfirmationEmail(URL, user);
         log.info("Successfully registered user with [email: {}]", user.getEmail());
 
         return userID;
