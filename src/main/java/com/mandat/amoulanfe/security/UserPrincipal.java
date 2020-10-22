@@ -31,6 +31,12 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private String country;
+
+    private String city;
+
+    private String district;
+
     private Collection<? extends GrantedAuthority> roles;
 
     public static UserPrincipal create(User user) {
@@ -43,6 +49,9 @@ public class UserPrincipal implements UserDetails {
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getCountry(),
+                user.getCity(),
+                user.getDistrict(),
                 roles
         );
     }

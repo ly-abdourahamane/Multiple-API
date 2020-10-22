@@ -16,5 +16,8 @@ public class UserSummary {
     private Long id;
     private String name;
     private String email;
+    private String country;
+    private String city;
+    private String district;
     private Collection<? extends GrantedAuthority> roles;
 }

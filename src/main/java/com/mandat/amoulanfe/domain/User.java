@@ -3,7 +3,6 @@ package com.mandat.amoulanfe.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -32,7 +31,6 @@ public class User implements Serializable {
     @Size(max = 40)
     private String name;
 
-    @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
@@ -42,15 +40,30 @@ public class User implements Serializable {
     @Size(max = 100)
     private String password;
 
+    @NotBlank
+    @Size(max = 40)
+    private String country;
+
+    @NotBlank
+    @Size(max = 40)
+    private String city;
+
+    @NotBlank
+    @Size(max = 40)
+    private String district;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(@NotBlank @Size(max = 40) String name, @NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(max = 100) String password) {
+    public User(String name, String email, String password, String country, String city, String district) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.country = country;
+        this.city = city;
+        this.district = district;
     }
 }

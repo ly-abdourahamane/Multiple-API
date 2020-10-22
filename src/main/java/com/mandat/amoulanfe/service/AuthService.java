@@ -97,7 +97,8 @@ public class AuthService {
             throw new ConflictException("[Email: " + signUpRequest.getEmail() + "] Existe déjà");
         }
 
-        User user = new User(signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword());
+        User user = new User(signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword(),
+                signUpRequest.getCountry(), signUpRequest.getCity(), signUpRequest.getDistrict());
 
         user.setPassword(passwordEncoder.encode(password));
 

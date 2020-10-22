@@ -22,4 +22,16 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 20)
     private String password;
+
+    @NotBlank
+    @Size(max = 40)
+    private String country;
+
+    @NotBlank
+    @Size(max = 40)
+    private String city;
+
+    @NotBlank
+    @Size(max = 40)
+    private String district;
 }

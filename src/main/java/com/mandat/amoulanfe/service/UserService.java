@@ -22,6 +22,9 @@ public class UserService {
                 .id(userPrincipal.getId())
                 .email(userPrincipal.getEmail())
                 .name(userPrincipal.getName())
+                .country(userPrincipal.getCountry())
+                .city(userPrincipal.getCity())
+                .district(userPrincipal.getDistrict())
                 .roles(userPrincipal.getRoles())
                 .build();
     }
