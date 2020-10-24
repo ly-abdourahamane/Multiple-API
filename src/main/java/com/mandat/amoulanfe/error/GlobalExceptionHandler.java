@@ -1,7 +1,6 @@
-package com.mandat.amoulanfe.controller;
+package com.mandat.amoulanfe.error;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mandat.amoulanfe.dto.ErrorResponse;
 import com.mandat.amoulanfe.exception.BadRequestException;
 import com.mandat.amoulanfe.exception.ConflictException;
 import com.mandat.amoulanfe.exception.NotFoundException;

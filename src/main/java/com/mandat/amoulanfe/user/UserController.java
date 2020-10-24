@@ -1,10 +1,7 @@
-package com.mandat.amoulanfe.controller;
+package com.mandat.amoulanfe.user;
 
-import com.mandat.amoulanfe.domain.User;
-import com.mandat.amoulanfe.dto.UserSummary;
 import com.mandat.amoulanfe.security.CurrentUser;
 import com.mandat.amoulanfe.security.UserPrincipal;
-import com.mandat.amoulanfe.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

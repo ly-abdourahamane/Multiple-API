@@ -1,6 +1,7 @@
-package com.mandat.amoulanfe.domain;
+package com.mandat.amoulanfe.file;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor

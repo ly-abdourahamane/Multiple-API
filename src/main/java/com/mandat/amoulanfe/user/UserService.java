@@ -1,8 +1,5 @@
-package com.mandat.amoulanfe.service;
+package com.mandat.amoulanfe.user;
 
-import com.mandat.amoulanfe.domain.User;
-import com.mandat.amoulanfe.dto.UserSummary;
-import com.mandat.amoulanfe.repository.UserRepository;
 import com.mandat.amoulanfe.security.UserPrincipal;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

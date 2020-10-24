@@ -1,6 +1,5 @@
-package com.mandat.amoulanfe.repository;
+package com.mandat.amoulanfe.user;
 
-import com.mandat.amoulanfe.domain.VerificationToken;
 import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
@@ -18,24 +17,23 @@ public class VerificationTokenRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public VerificationToken save(VerificationToken verificationTokenCandidat){
+    public VerificationToken save(VerificationToken verificationTokenCandidat) {
         entityManager.persist(verificationTokenCandidat);
         return verificationTokenCandidat;
     }
 
-    public void delete(VerificationToken verificationTokenCandidat){
+    public void delete(VerificationToken verificationTokenCandidat) {
         entityManager.remove(verificationTokenCandidat);
     }
 
-    public VerificationToken findByToken(String token){
+    public VerificationToken findByToken(String token) {
         TypedQuery<VerificationToken> query = entityManager.createQuery("select v from VerificationToken v where token =:token", VerificationToken.class);
-        query.setParameter("token",token);
+        query.setParameter("token", token);
         try {
-            return  query.getSingleResult();
-        }catch (NoResultException e){
-            return  null;
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-
     }
 
 }

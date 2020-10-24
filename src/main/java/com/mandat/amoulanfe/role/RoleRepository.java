@@ -1,7 +1,5 @@
-package com.mandat.amoulanfe.repository;
+package com.mandat.amoulanfe.role;
 
-import com.mandat.amoulanfe.domain.Role;
-import com.mandat.amoulanfe.domain.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

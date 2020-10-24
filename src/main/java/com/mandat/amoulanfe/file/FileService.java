@@ -1,11 +1,7 @@
-package com.mandat.amoulanfe.service;
+package com.mandat.amoulanfe.file;
 
-import com.mandat.amoulanfe.domain.FileStorageProperties;
-import com.mandat.amoulanfe.domain.FileUpload;
-import com.mandat.amoulanfe.dto.FileUploadDTO;
 import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
-import com.mandat.amoulanfe.repository.FileRepository;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDateTime;
@@ -40,8 +36,8 @@ import java.util.zip.ZipOutputStream;
 @Service
 public class FileService {
 
-    private FileRepository fileRepository;
     private final Path fileStorageLocation;
+    private FileRepository fileRepository;
 
     @Autowired
     public FileService(FileRepository fileRepository, FileStorageProperties fileStorageProperties) {
@@ -66,7 +62,7 @@ public class FileService {
         String createdDate = dateTimeFormat.withLocale(Locale.FRANCE).print(localDateTime);
 
         try {
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new FileStoreException("Le nom du fichier est incorrect " + fileName);
             }
 
@@ -79,7 +75,7 @@ public class FileService {
                     .orElse(null);
 
             //Mise à jour du fichier s'il existe
-            if(DBFile != null) {
+            if (DBFile != null) {
                 fileUpload.setId(DBFile.getId());
                 log.info("Le fichier " + fileName + " existe déjà, il a été mis à jour");
             }
@@ -91,7 +87,7 @@ public class FileService {
             fileUpload.setCreatedDate(createdDate);
             this.fileRepository.save(fileUpload);
 
-            if(DBFile == null) {
+            if (DBFile == null) {
                 log.info("Le fichier " + fileName + " à été bien chargé");
             }
 
@@ -105,7 +101,7 @@ public class FileService {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new FileNotFoundException("Fichier non trouvé " + fileName);
@@ -122,7 +118,7 @@ public class FileService {
 
     public FileUpload findFileByName(String name) {
         return fileRepository.findByName(name)
-                .orElseThrow(() -> new FileNotFoundException("Le fichier [" + name + "] est introuvable" ));
+                .orElseThrow(() -> new FileNotFoundException("Le fichier [" + name + "] est introuvable"));
     }
 
     public List<FileUploadDTO> findAllFilesInfos() {

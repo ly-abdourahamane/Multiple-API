@@ -1,4 +1,4 @@
-package com.mandat.amoulanfe.domain;
+package com.mandat.amoulanfe.file;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

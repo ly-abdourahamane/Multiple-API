@@ -1,19 +1,13 @@
-package com.mandat.amoulanfe.service;
+package com.mandat.amoulanfe.auth;
 
-import com.mandat.amoulanfe.domain.Role;
-import com.mandat.amoulanfe.domain.RoleName;
-import com.mandat.amoulanfe.domain.User;
-import com.mandat.amoulanfe.domain.VerificationToken;
-import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
-import com.mandat.amoulanfe.dto.LoginRequest;
-import com.mandat.amoulanfe.dto.SignUpRequest;
 import com.mandat.amoulanfe.exception.AppException;
 import com.mandat.amoulanfe.exception.ConflictException;
-import com.mandat.amoulanfe.repository.RoleRepository;
-import com.mandat.amoulanfe.repository.UserRepository;
-import com.mandat.amoulanfe.repository.VerificationTokenRepository;
+import com.mandat.amoulanfe.role.Role;
+import com.mandat.amoulanfe.role.RoleName;
+import com.mandat.amoulanfe.role.RoleRepository;
 import com.mandat.amoulanfe.security.JwtTokenProvider;
 import com.mandat.amoulanfe.security.UserPrincipal;
+import com.mandat.amoulanfe.user.*;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +31,7 @@ import java.util.UUID;
 @Slf4j
 public class AuthService {
 
-    private static final String URL = "http://localhost:8000/api/v1/utilsAPI/user/signin";
+    private static final String URL = "http://localhost:8000/api/v1//users/signin";
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -64,7 +58,7 @@ public class AuthService {
 
     public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest) {
         StringBuilder password = new StringBuilder(loginRequest.getPassword());
-        for(int i = 0; i < 0b10011100010000; i++) {
+        for (int i = 0; i < 0b10011100010000; i++) {
             password.append(loginRequest.getEmail()).append(loginRequest.getPassword());
         }
 
@@ -89,11 +83,11 @@ public class AuthService {
     public Long registerUser(SignUpRequest signUpRequest) throws MessagingException {
 
         StringBuilder password = new StringBuilder(signUpRequest.getPassword());
-        for(int i = 0; i < 0b10011100010000; i++) {
+        for (int i = 0; i < 0b10011100010000; i++) {
             password.append(signUpRequest.getEmail()).append(signUpRequest.getPassword());
         }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictException("[Email: " + signUpRequest.getEmail() + "] Existe déjà");
         }
 
@@ -107,8 +101,8 @@ public class AuthService {
 
         user.setRoles(Collections.singleton(userRole));
 
-        Long userID =  userRepository.save(user).getId();
-   //     sendConfirmationEmail(URL, user);
+        Long userID = userRepository.save(user).getId();
+        //     sendConfirmationEmail(URL, user);
         log.info("Successfully registered user with [email: {}]", user.getEmail());
 
         return userID;
@@ -117,9 +111,9 @@ public class AuthService {
     public void sendConfirmationEmail(String url, User user) throws MessagingException {
         String token = UUID.randomUUID().toString();
         LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
-        VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,user);
+        VerificationToken verificationToken = new VerificationToken(token, dateExpirationToken, user);
         VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
-        mailService.sendVerificationEmail(url,savedToken.getToken(),user.getEmail());
+        mailService.sendVerificationEmail(url, savedToken.getToken(), user.getEmail());
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {

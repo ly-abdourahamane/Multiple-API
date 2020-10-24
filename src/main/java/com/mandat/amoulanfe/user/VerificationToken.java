@@ -1,9 +1,7 @@
-package com.mandat.amoulanfe.domain;
+package com.mandat.amoulanfe.user;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,10 +20,10 @@ public class VerificationToken {
     @OneToOne
     private User user;
 
-    public VerificationToken(String token, LocalDateTime dateExpiration, Object object){
+    public VerificationToken(String token, LocalDateTime dateExpiration, Object object) {
         this.token = token;
         this.dateExpiration = dateExpiration;
-        if(object instanceof User){
+        if (object instanceof User) {
             this.user = (User) object;
         }
     }

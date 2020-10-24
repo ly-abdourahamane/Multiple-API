@@ -1,4 +1,4 @@
-package com.mandat.amoulanfe.service;
+package com.mandat.amoulanfe.user;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendVerificationEmail(String url,String token ,String email) throws MessagingException {
+    public void sendVerificationEmail(String url, String token, String email) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setSubject("Confirmer votre inscription à mon application sans nom lol");
         helper.setTo(email);
-        String urlVerification = url+token;
-        helper.setText("\n" + "<html><body><h1>Email de confirmation</h1></body></html>\n" + urlVerification , true);
+        String urlVerification = url + token;
+        helper.setText("\n" + "<html><body><h1>Email de confirmation</h1></body></html>\n" + urlVerification, true);
         mailSender.send(message);
     }
 

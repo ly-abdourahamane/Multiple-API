@@ -1,4 +1,4 @@
-package com.mandat.amoulanfe.dto;
+package com.mandat.amoulanfe.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

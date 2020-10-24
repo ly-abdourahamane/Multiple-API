@@ -1,6 +1,5 @@
-package com.mandat.amoulanfe.repository;
+package com.mandat.amoulanfe.file;
 
-import com.mandat.amoulanfe.domain.FileUpload;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

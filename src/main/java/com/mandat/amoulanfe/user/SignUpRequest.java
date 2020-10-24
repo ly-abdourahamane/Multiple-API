@@ -1,6 +1,7 @@
-package com.mandat.amoulanfe.dto;
+package com.mandat.amoulanfe.user;
 
 import lombok.Data;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

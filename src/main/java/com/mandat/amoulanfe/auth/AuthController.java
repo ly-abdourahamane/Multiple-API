@@ -1,11 +1,9 @@
-package com.mandat.amoulanfe.controller;
+package com.mandat.amoulanfe.auth;
 
-import com.mandat.amoulanfe.dto.JwtAuthenticationResponse;
-import com.mandat.amoulanfe.dto.LoginRequest;
-import com.mandat.amoulanfe.dto.SignUpRequest;
-import com.mandat.amoulanfe.service.AuthService;
+import com.mandat.amoulanfe.user.JwtAuthenticationResponse;
+import com.mandat.amoulanfe.user.LoginRequest;
+import com.mandat.amoulanfe.user.SignUpRequest;
 import io.swagger.annotations.ApiOperation;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

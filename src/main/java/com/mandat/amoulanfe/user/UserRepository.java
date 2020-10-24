@@ -1,6 +1,5 @@
-package com.mandat.amoulanfe.repository;
+package com.mandat.amoulanfe.user;
 
-import com.mandat.amoulanfe.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

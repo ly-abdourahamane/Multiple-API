@@ -1,17 +1,17 @@
 package com.mandat.amoulanfe;
 
-import com.mandat.amoulanfe.domain.FileStorageProperties;
+import com.mandat.amoulanfe.file.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-		FileStorageProperties.class
+        FileStorageProperties.class
 })
 public class AmoulanfeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AmoulanfeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AmoulanfeApplication.class, args);
+    }
 }

@@ -1,8 +1,10 @@
 package com.mandat.amoulanfe.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mandat.amoulanfe.domain.User;
-import lombok.*;
+import com.mandat.amoulanfe.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

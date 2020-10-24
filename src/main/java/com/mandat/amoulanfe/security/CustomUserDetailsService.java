@@ -1,8 +1,8 @@
 package com.mandat.amoulanfe.security;
 
-import com.mandat.amoulanfe.domain.User;
 import com.mandat.amoulanfe.exception.NotFoundException;
-import com.mandat.amoulanfe.repository.UserRepository;
+import com.mandat.amoulanfe.user.User;
+import com.mandat.amoulanfe.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {

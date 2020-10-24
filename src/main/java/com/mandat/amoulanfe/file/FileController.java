@@ -1,11 +1,6 @@
-package com.mandat.amoulanfe.controller;
+package com.mandat.amoulanfe.file;
 
-import com.mandat.amoulanfe.domain.FileUpload;
-import com.mandat.amoulanfe.domain.UploadFileResponse;
-import com.mandat.amoulanfe.dto.FileUploadDTO;
-import com.mandat.amoulanfe.service.FileService;
 import io.swagger.annotations.ApiOperation;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -70,7 +65,7 @@ public class FileController {
         }
 
         // Type de contenu par defaut
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
 
@@ -81,7 +76,7 @@ public class FileController {
     }
 
     @ApiOperation(value = "Téléchargement des fichiers dont les noms sont donnés en paramètres dans un zip")
-    @GetMapping(value = "zip-download" , produces="application/zip")
+    @GetMapping(value = "zip-download", produces = "application/zip")
     @PreAuthorize("hasRole('USER')")
     public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
         fileService.zipDownload(fileNameList, response);

@@ -1,4 +1,4 @@
-package com.mandat.amoulanfe.domain;
+package com.mandat.amoulanfe.role;
 
 import lombok.Data;
 import org.hibernate.annotations.NaturalId;
