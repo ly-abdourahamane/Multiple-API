@@ -1,5 +1,6 @@
 package com.mandat.amoulanfe.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +19,8 @@ import java.util.Set;
                 "email"
         })
 })
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 public class User implements Serializable {
 

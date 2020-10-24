@@ -30,6 +30,6 @@ public class UserService {
     }
 
     public List<User> findAllUsers() {
-        return this.userRepository.findAll();
+        return this.userRepository.findAllUsers();
     }
 }

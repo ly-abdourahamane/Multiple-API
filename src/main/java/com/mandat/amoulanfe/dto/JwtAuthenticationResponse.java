@@ -1,10 +1,8 @@
 package com.mandat.amoulanfe.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";

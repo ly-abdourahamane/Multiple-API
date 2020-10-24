@@ -17,9 +17,8 @@ import javax.validation.Valid;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-@Setter
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private static final String URL = "http://localhost:8000/api/v1/signin";
@@ -40,7 +39,7 @@ public class AuthController {
         return authService.registerUser(signUpRequest);
     }
 
-    @ApiOperation(value = "Connexion à mon compte")
+    @ApiOperation(value = "Déconnexion à mon compte")
     @GetMapping("/logout")
     @ResponseStatus(OK)
     public void logout(HttpServletRequest request, HttpServletResponse response) {

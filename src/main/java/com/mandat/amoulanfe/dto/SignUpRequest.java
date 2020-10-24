@@ -1,14 +1,11 @@
 package com.mandat.amoulanfe.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
+@Data
 public class SignUpRequest {
     @NotBlank
     @Size(min = 4, max = 40)

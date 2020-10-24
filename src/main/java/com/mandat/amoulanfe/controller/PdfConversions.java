@@ -31,7 +31,7 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/utils/pdf/conversions")
+@RequestMapping("/api/v1/pdf/conversions")
 public class PdfConversions {
 
     @ApiOperation(value = "Transformation d'un pdf en html")
@@ -49,7 +49,7 @@ public class PdfConversions {
             }
 
             PDDocument pdf = PDDocument.load(newFile);
-            Writer output = new PrintWriter("src/output/"+htmlFileName, StandardCharsets.UTF_8);
+            Writer output = new PrintWriter("src/output/"+htmlFileName);
 
             new PDFDomTree().writeText(pdf, output);
 
