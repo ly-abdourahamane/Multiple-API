@@ -30,7 +30,7 @@ public class FileController {
 
     @ApiOperation(value = "Chargement d'un fichier")
     @PostMapping(value = "/upload/one")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
 
@@ -44,7 +44,7 @@ public class FileController {
 
     @ApiOperation(value = "Chargement de plusieurs fichiers")
     @PostMapping("/upload/multiple")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
                 .map(this::uploadFile)
@@ -53,7 +53,6 @@ public class FileController {
 
     @ApiOperation(value = "Téléchargement d'un fichier")
     @GetMapping("/download/{fileName:.+}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileService.loadFile(fileName);
 

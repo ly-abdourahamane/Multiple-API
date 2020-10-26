@@ -43,5 +43,7 @@ public class Victim implements Serializable {
     private String birthDate;
 
     private int age;
+
+    private  String profileLink;
 }
 
