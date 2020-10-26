@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -42,6 +44,23 @@ public class VictimController {
     @ResponseStatus(OK)
     public Victim getOne(@PathVariable Long id) {
         return victimService.getVictimById(id);
+    }
+
+    @ApiOperation(value = "Suppression d'une victime")
+    @DeleteMapping("{id}")
+    @ResponseStatus(OK)
+    public void delete(@PathVariable Long id) {
+        victimService.deleteVictimById(id);
+    }
+
+    @ApiOperation(value = "Suppression d'une victime")
+    @DeleteMapping("")
+    @ResponseStatus(OK)
+    public void deleteManyVictims(@RequestParam List<Long> idList) {
+        //TODO: To verify all requests are done
+        for (Long id: idList) {
+            delete(id);
+        }
     }
 
     @ApiOperation(value = "Retourner la liste des victimes par page")

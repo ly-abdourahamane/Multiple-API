@@ -35,6 +35,10 @@ public class VictimService {
         return victimRepository.getOne(id);
     }
 
+    public void deleteVictimById(Long id) {
+        victimRepository.deleteById(id);
+    }
+
     public Page<Victim> findAllVictims(Specification<Victim> specification, Pageable pageable) {
         return victimRepository.findAll(specification, pageable);
     }

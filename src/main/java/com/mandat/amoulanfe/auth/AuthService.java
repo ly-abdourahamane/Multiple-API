@@ -31,6 +31,7 @@ import java.util.UUID;
 @Slf4j
 public class AuthService {
 
+    //TODO: replace this URL by frontend signin link soon
     private static final String URL = "http://localhost:8000/api/v1//users/signin";
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;

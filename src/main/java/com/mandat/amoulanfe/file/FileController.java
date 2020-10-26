@@ -35,7 +35,7 @@ public class FileController {
         String fileName = fileService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/v1/utilsAPI/files/download/")
+                .path("/api/v1/files/download/")
                 .path(fileName)
                 .toUriString();
 
@@ -64,7 +64,7 @@ public class FileController {
             log.info("Could not determine file type.");
         }
 
-        // Type de contenu par defaut
+        // Default content type
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
