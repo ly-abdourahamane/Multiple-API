@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -58,7 +57,7 @@ public class VictimController {
     @ResponseStatus(OK)
     public void deleteManyVictims(@RequestParam List<Long> idList) {
         //TODO: To verify all requests are done
-        for (Long id: idList) {
+        for (Long id : idList) {
             delete(id);
         }
     }

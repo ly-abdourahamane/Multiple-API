@@ -4,9 +4,6 @@ import com.mandat.amoulanfe.exception.FileNotFoundException;
 import com.mandat.amoulanfe.exception.FileStoreException;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -26,7 +23,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -57,10 +53,6 @@ public class FileService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         FileUpload fileUpload = new FileUpload();
 
-        LocalDateTime localDateTime = new LocalDateTime();
-        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-        String createdDate = dateTimeFormat.withLocale(Locale.FRANCE).print(localDateTime);
-
         try {
             if (fileName.contains("..")) {
                 throw new FileStoreException("Le nom du fichier est incorrect " + fileName);
@@ -84,7 +76,6 @@ public class FileService {
             fileUpload.setType(file.getContentType());
             fileUpload.setBuffer(file.getBytes());
             fileUpload.setSize(file.getSize());
-            fileUpload.setCreatedDate(createdDate);
             this.fileRepository.save(fileUpload);
 
             if (DBFile == null) {
@@ -126,7 +117,7 @@ public class FileService {
         List<FileUploadDTO> fileUploadDTOS = new ArrayList<>();
 
         fileUploads.forEach(elem -> fileUploadDTOS.add(new FileUploadDTO(elem.getId(), elem.getName(),
-                elem.getType(), elem.getSize(), elem.getCreatedDate())));
+                elem.getType(), elem.getSize(), elem.getCreationDate())));
 
         return fileUploadDTOS;
     }
