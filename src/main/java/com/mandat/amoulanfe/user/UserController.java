@@ -26,14 +26,13 @@ public class UserController {
 
     @ApiOperation(value = "Récuperer l'utilisateur courant")
     @GetMapping("me")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ROLE_SUPER_ADMIN') or hasRole('ROLE_ADMIN')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return userService.getCurrentUser(currentUser);
     }
 
     @ApiOperation(value = "Retourne tous les utilisateurs")
     @GetMapping("all")
-    @PreAuthorize("hasRole('USER')")
     public List<User> findAll() {
         return userService.findAllUsers();
     }

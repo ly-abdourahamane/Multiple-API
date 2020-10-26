@@ -11,5 +11,4 @@ public class VictimRequest {
     private String deathDate;
     private String birthDate;
     private int age;
-    private byte[] profile;
 }

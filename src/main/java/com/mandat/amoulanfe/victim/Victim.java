@@ -1,16 +1,19 @@
 package com.mandat.amoulanfe.victim;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.joda.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Data
-@Entity(name = "victims")
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Victim implements Serializable {
 
     @Id
@@ -40,8 +43,5 @@ public class Victim implements Serializable {
     private String birthDate;
 
     private int age;
-
-    @Lob
-    private byte[] profile;
 }
 

@@ -1,18 +1,21 @@
 package com.mandat.amoulanfe.victim;
 
+import com.mandat.amoulanfe.user.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
+@Slf4j
 public class VictimService {
 
     @Autowired
     private VictimRepository victimRepository;
+
+    private UserRepository userRepository;
 
     public Long save(VictimRequest victimRequest) {
         Victim victim = new Victim();
@@ -23,17 +26,16 @@ public class VictimService {
         victim.setFirstname(victimRequest.getFirstname());
         victim.setLastname(victimRequest.getLastname());
         victim.setDeathDate(victimRequest.getDeathDate());
-        victim.setProfile(victimRequest.getProfile());
 
         Victim victimSaved = victimRepository.save(victim);
         return victimSaved.getId();
     }
 
-    public Victim getVictimById(UUID id) {
+    public Victim getVictimById(Long id) {
         return victimRepository.getOne(id);
     }
 
-    public Page findAllVictims(Specification<Victim> specification, Pageable pageable) {
+    public Page<Victim> findAllVictims(Specification<Victim> specification, Pageable pageable) {
         return victimRepository.findAll(specification, pageable);
     }
 }

@@ -14,7 +14,7 @@ public class VictimSpecifivationFactory extends BasicSpecificationFactory {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if(Text.isValid(filter.getSearch())) {
+            if (Text.isValid(filter.getSearch())) {
                 Predicate searchPredicate = cb.or(
                         normalizedLike(cb, root.get(Victim_.FIRSTNAME), filter.getSearch()),
                         normalizedLike(cb, root.get(Victim_.LASTNAME), filter.getSearch()),
@@ -26,17 +26,17 @@ public class VictimSpecifivationFactory extends BasicSpecificationFactory {
             }
 
             if (filter.getFirstname() != null) {
-                Predicate firstnamePredicate =normalizedLike(cb, root.get(Victim_.FIRSTNAME), filter.getFirstname());
+                Predicate firstnamePredicate = normalizedLike(cb, root.get(Victim_.FIRSTNAME), filter.getFirstname());
                 predicates.add(firstnamePredicate);
             }
 
             if (filter.getLastname() != null) {
-                Predicate lastnamePredicate =normalizedLike(cb, root.get(Victim_.LASTNAME), filter.getLastname());
+                Predicate lastnamePredicate = normalizedLike(cb, root.get(Victim_.LASTNAME), filter.getLastname());
                 predicates.add(lastnamePredicate);
             }
 
             if (filter.getCity() != null) {
-                Predicate cityPredicate =normalizedLike(cb, root.get(Victim_.CITY), filter.getCity());
+                Predicate cityPredicate = normalizedLike(cb, root.get(Victim_.CITY), filter.getCity());
                 predicates.add(cityPredicate);
             }
 

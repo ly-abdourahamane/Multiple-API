@@ -11,7 +11,7 @@ public class Text {
     }
 
     public static String normalize(String string) {
-        if(!isValid(string)) {
+        if (!isValid(string)) {
             return "";
         }
         return StringUtils.stripAccents(string.toLowerCase()).trim();
