@@ -3,9 +3,9 @@ package com.mandat.amoulanfe.user;
 import com.mandat.amoulanfe.security.UserPrincipal;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Setter
 @Service
@@ -26,7 +26,7 @@ public class UserService {
                 .build();
     }
 
-    public List<User> findAllUsers() {
-        return this.userRepository.findAllUsers();
+    public Page<User> findAllUsers(Pageable pageable) {
+        return this.userRepository.findAllUsers(pageable);
     }
 }

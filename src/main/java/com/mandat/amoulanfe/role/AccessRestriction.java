@@ -16,7 +16,7 @@ public class AccessRestriction {
             }
 
             //Admin can access its assigned tasks
-            if (RoleUtils.hasOneRole(authentication, RoleUtils.getAdminRoles())) {
+            if (RoleUtils.hasOneRole(authentication, RoleUtils.getAllRoles())) {
                 return AccessLevel.ASSIGNED;
             }
         }

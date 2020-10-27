@@ -8,7 +8,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,7 +29,6 @@ public class FileController {
 
     @ApiOperation(value = "Chargement d'un fichier")
     @PostMapping(value = "/upload/one")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
 
@@ -44,7 +42,6 @@ public class FileController {
 
     @ApiOperation(value = "Chargement de plusieurs fichiers")
     @PostMapping("/upload/multiple")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
                 .map(this::uploadFile)
@@ -76,7 +73,6 @@ public class FileController {
 
     @ApiOperation(value = "Téléchargement des fichiers dont les noms sont donnés en paramètres dans un zip")
     @GetMapping(value = "zip-download", produces = "application/zip")
-    @PreAuthorize("hasRole('USER')")
     public void zipDownload(@RequestParam("name") List<String> fileNameList, HttpServletResponse response) throws IOException {
         fileService.zipDownload(fileNameList, response);
     }

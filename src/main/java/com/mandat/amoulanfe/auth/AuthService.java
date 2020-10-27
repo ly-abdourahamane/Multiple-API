@@ -97,7 +97,7 @@ public class AuthService {
 
         user.setPassword(passwordEncoder.encode(password));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_SUPER_ADMIN)
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set. Add default roles to database."));
 
         user.setRoles(Collections.singleton(userRole));

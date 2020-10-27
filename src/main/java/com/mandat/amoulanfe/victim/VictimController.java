@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,12 +24,11 @@ public class VictimController {
     private VictimService victimService;
 
     @ApiOperation(value = "Ajout d'une victime")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN') or hasRole('ROLE_ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(CREATED)
     public Long save(@Valid @RequestBody VictimRequest victimRequest) {
         AccessLevel accessLevel = AccessRestriction.getCurrentUserAccessLevel();
-        if (accessLevel == AccessLevel.ALL) {
+        if (accessLevel == AccessLevel.ALL || accessLevel == AccessLevel.ASSIGNED) {
             return victimService.save(victimRequest);
         }
 
@@ -46,14 +44,14 @@ public class VictimController {
     }
 
     @ApiOperation(value = "Suppression d'une victime")
-    @DeleteMapping("{id}")
+    @DeleteMapping("delete/{id}")
     @ResponseStatus(OK)
     public void delete(@PathVariable Long id) {
         victimService.deleteVictimById(id);
     }
 
-    @ApiOperation(value = "Suppression d'une victime")
-    @DeleteMapping("")
+    @ApiOperation(value = "Suppression d'une liste de victimes")
+    @DeleteMapping("delete")
     @ResponseStatus(OK)
     public void deleteManyVictims(@RequestParam List<Long> idList) {
         //TODO: To verify all requests are done

@@ -16,7 +16,7 @@ public class RoleUtils {
         return Arrays.asList(Role.ADMIN, Role.SUPER_ADMIN);
     }
 
-    public static List<Role> getSuperAdminRoles() {
+    public static List<Role> getAllRoles() {
         return Arrays.asList(Role.USER, Role.ADMIN, Role.SUPER_ADMIN);
     }
 

@@ -5,12 +5,11 @@ import com.mandat.amoulanfe.security.UserPrincipal;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @Setter
@@ -26,15 +25,14 @@ public class UserController {
 
     @ApiOperation(value = "Récuperer l'utilisateur courant")
     @GetMapping("me")
-    @PreAuthorize("hasRole('USER') or hasRole('ROLE_SUPER_ADMIN') or hasRole('ROLE_ADMIN')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return userService.getCurrentUser(currentUser);
     }
 
     @ApiOperation(value = "Retourne tous les utilisateurs")
     @GetMapping("all")
-    public List<User> findAll() {
-        return userService.findAllUsers();
+    public Page<User> findAll(Pageable pageable) {
+        return userService.findAllUsers(pageable);
     }
 
 }

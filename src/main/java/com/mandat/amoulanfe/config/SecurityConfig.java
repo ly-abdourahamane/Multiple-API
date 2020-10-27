@@ -1,5 +1,6 @@
 package com.mandat.amoulanfe.config;
 
+import com.mandat.amoulanfe.role.RoleUtils;
 import com.mandat.amoulanfe.security.CustomUserDetailsService;
 import com.mandat.amoulanfe.security.JwtAuthenticationEntryPoint;
 import com.mandat.amoulanfe.security.JwtAuthenticationFilter;
@@ -105,10 +106,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+
+                //Victims
+                .antMatchers("/api/v1/victims/add").hasAnyRole(RoleUtils.buildRolesListToStringsList(RoleUtils.getAllRoles()))
+                .antMatchers("/api/v1/victims/delete/**").hasAnyRole(RoleUtils.buildRolesListToStringsList(RoleUtils.getAdminAndSuperAdminRoles()))
+
+                //Files
+                .antMatchers("/api/v1/files/upload/one").hasAnyRole(RoleUtils.buildRolesListToStringsList(RoleUtils.getAllRoles()))
+                .antMatchers("/api/v1/files/upload/multiple").hasAnyRole(RoleUtils.buildRolesListToStringsList(RoleUtils.getAllRoles()))
+
                 .antMatchers("/api/v1/**")
                 .permitAll()
-//                .antMatchers("/api/yourEndpoint")
-//                .permitAll()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()
