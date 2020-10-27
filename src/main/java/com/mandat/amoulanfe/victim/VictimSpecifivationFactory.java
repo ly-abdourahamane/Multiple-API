@@ -40,6 +40,19 @@ public class VictimSpecifivationFactory extends BasicSpecificationFactory {
                 predicates.add(cityPredicate);
             }
 
+            //Filter by start date
+            if (filter.getDeathFromDate() != null) {
+                Predicate startPredicate = cb.greaterThanOrEqualTo(root.get(Victim_.DEATH_DATE), filter.getDeathFromDate());
+                predicates.add(startPredicate);
+            }
+
+            //Filter by end date
+            if (filter.getDeathToDate() != null) {
+                Predicate endPredicate = cb.or(cb.isNull(root.get(Victim_.DEATH_DATE)),
+                        cb.lessThanOrEqualTo(root.get(Victim_.DEATH_DATE), filter.getDeathToDate()));
+                predicates.add(endPredicate);
+            }
+
             query.distinct(true);
             return cb.and(predicates.toArray(new Predicate[0]));
         };

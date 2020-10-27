@@ -1,6 +1,9 @@
 package com.mandat.amoulanfe.victim;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Data
 public class VictimFilter {
@@ -8,7 +11,12 @@ public class VictimFilter {
     private String lastname;
     private String city;
     private String description;
-    private String deathDate;
-    private String birthDate;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deathFromDate;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deathToDate;
+
     private String search;
 }
