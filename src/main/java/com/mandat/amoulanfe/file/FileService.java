@@ -124,7 +124,7 @@ public class FileService {
 
     public void zipDownload(List<String> fileNameList, HttpServletResponse response) throws IOException {
         ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
-        String fileBasePath = "UPLOAD-FILES/";
+        String fileBasePath = "FILES-STORE/";
         String zipFileName = "filesZip";
 
         for (String fileName : fileNameList) {
